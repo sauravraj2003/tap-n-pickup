@@ -160,7 +160,7 @@ function CanteenDetail() {
             <div className="p-4 bg-surface ring-1 ring-border rounded-2xl">
               <h4 className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Popular items</h4>
               <ul className="space-y-1 text-sm text-foreground">
-                {c.popular.map((p) => <li key={p}>· {p}</li>)}
+                {c.popular.map((p: string) => <li key={p}>· {p}</li>)}
               </ul>
             </div>
           </div>

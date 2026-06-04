@@ -9,10 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as HomeRouteImport } from './routes/home'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ItemItemIdRouteImport } from './routes/item.$itemId'
+import { Route as CanteenIdRouteImport } from './routes/canteen.$id'
 import { Route as AuthOtpRouteImport } from './routes/auth.otp'
 
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -21,6 +29,16 @@ const AuthRoute = AuthRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ItemItemIdRoute = ItemItemIdRouteImport.update({
+  id: '/item/$itemId',
+  path: '/item/$itemId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CanteenIdRoute = CanteenIdRouteImport.update({
+  id: '/canteen/$id',
+  path: '/canteen/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthOtpRoute = AuthOtpRouteImport.update({
@@ -32,34 +50,66 @@ const AuthOtpRoute = AuthOtpRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/home': typeof HomeRoute
   '/auth/otp': typeof AuthOtpRoute
+  '/canteen/$id': typeof CanteenIdRoute
+  '/item/$itemId': typeof ItemItemIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/home': typeof HomeRoute
   '/auth/otp': typeof AuthOtpRoute
+  '/canteen/$id': typeof CanteenIdRoute
+  '/item/$itemId': typeof ItemItemIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/home': typeof HomeRoute
   '/auth/otp': typeof AuthOtpRoute
+  '/canteen/$id': typeof CanteenIdRoute
+  '/item/$itemId': typeof ItemItemIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/auth/otp'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/home'
+    | '/auth/otp'
+    | '/canteen/$id'
+    | '/item/$itemId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/auth/otp'
-  id: '__root__' | '/' | '/auth' | '/auth/otp'
+  to: '/' | '/auth' | '/home' | '/auth/otp' | '/canteen/$id' | '/item/$itemId'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/home'
+    | '/auth/otp'
+    | '/canteen/$id'
+    | '/item/$itemId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
+  HomeRoute: typeof HomeRoute
+  CanteenIdRoute: typeof CanteenIdRoute
+  ItemItemIdRoute: typeof ItemItemIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -72,6 +122,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/item/$itemId': {
+      id: '/item/$itemId'
+      path: '/item/$itemId'
+      fullPath: '/item/$itemId'
+      preLoaderRoute: typeof ItemItemIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/canteen/$id': {
+      id: '/canteen/$id'
+      path: '/canteen/$id'
+      fullPath: '/canteen/$id'
+      preLoaderRoute: typeof CanteenIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/otp': {
@@ -97,6 +161,9 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
+  HomeRoute: HomeRoute,
+  CanteenIdRoute: CanteenIdRoute,
+  ItemItemIdRoute: ItemItemIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

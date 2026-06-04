@@ -9,38 +9,252 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as OrdersRouteImport } from './routes/orders'
+import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as HomeRouteImport } from './routes/home'
+import { Route as CartRouteImport } from './routes/cart'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReviewsIdRouteImport } from './routes/reviews.$id'
+import { Route as OrderTrackingRouteImport } from './routes/order.tracking'
+import { Route as OrderPickupRouteImport } from './routes/order.pickup'
+import { Route as OrderConfirmationRouteImport } from './routes/order.confirmation'
+import { Route as ItemItemIdRouteImport } from './routes/item.$itemId'
+import { Route as CanteenIdRouteImport } from './routes/canteen.$id'
+import { Route as AuthOtpRouteImport } from './routes/auth.otp'
 
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReviewsIdRoute = ReviewsIdRouteImport.update({
+  id: '/reviews/$id',
+  path: '/reviews/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderTrackingRoute = OrderTrackingRouteImport.update({
+  id: '/order/tracking',
+  path: '/order/tracking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderPickupRoute = OrderPickupRouteImport.update({
+  id: '/order/pickup',
+  path: '/order/pickup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderConfirmationRoute = OrderConfirmationRouteImport.update({
+  id: '/order/confirmation',
+  path: '/order/confirmation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ItemItemIdRoute = ItemItemIdRouteImport.update({
+  id: '/item/$itemId',
+  path: '/item/$itemId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CanteenIdRoute = CanteenIdRouteImport.update({
+  id: '/canteen/$id',
+  path: '/canteen/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthOtpRoute = AuthOtpRouteImport.update({
+  id: '/otp',
+  path: '/otp',
+  getParentRoute: () => AuthRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRouteWithChildren
+  '/cart': typeof CartRoute
+  '/home': typeof HomeRoute
+  '/notifications': typeof NotificationsRoute
+  '/orders': typeof OrdersRoute
+  '/profile': typeof ProfileRoute
+  '/auth/otp': typeof AuthOtpRoute
+  '/canteen/$id': typeof CanteenIdRoute
+  '/item/$itemId': typeof ItemItemIdRoute
+  '/order/confirmation': typeof OrderConfirmationRoute
+  '/order/pickup': typeof OrderPickupRoute
+  '/order/tracking': typeof OrderTrackingRoute
+  '/reviews/$id': typeof ReviewsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRouteWithChildren
+  '/cart': typeof CartRoute
+  '/home': typeof HomeRoute
+  '/notifications': typeof NotificationsRoute
+  '/orders': typeof OrdersRoute
+  '/profile': typeof ProfileRoute
+  '/auth/otp': typeof AuthOtpRoute
+  '/canteen/$id': typeof CanteenIdRoute
+  '/item/$itemId': typeof ItemItemIdRoute
+  '/order/confirmation': typeof OrderConfirmationRoute
+  '/order/pickup': typeof OrderPickupRoute
+  '/order/tracking': typeof OrderTrackingRoute
+  '/reviews/$id': typeof ReviewsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRouteWithChildren
+  '/cart': typeof CartRoute
+  '/home': typeof HomeRoute
+  '/notifications': typeof NotificationsRoute
+  '/orders': typeof OrdersRoute
+  '/profile': typeof ProfileRoute
+  '/auth/otp': typeof AuthOtpRoute
+  '/canteen/$id': typeof CanteenIdRoute
+  '/item/$itemId': typeof ItemItemIdRoute
+  '/order/confirmation': typeof OrderConfirmationRoute
+  '/order/pickup': typeof OrderPickupRoute
+  '/order/tracking': typeof OrderTrackingRoute
+  '/reviews/$id': typeof ReviewsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/cart'
+    | '/home'
+    | '/notifications'
+    | '/orders'
+    | '/profile'
+    | '/auth/otp'
+    | '/canteen/$id'
+    | '/item/$itemId'
+    | '/order/confirmation'
+    | '/order/pickup'
+    | '/order/tracking'
+    | '/reviews/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/cart'
+    | '/home'
+    | '/notifications'
+    | '/orders'
+    | '/profile'
+    | '/auth/otp'
+    | '/canteen/$id'
+    | '/item/$itemId'
+    | '/order/confirmation'
+    | '/order/pickup'
+    | '/order/tracking'
+    | '/reviews/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/cart'
+    | '/home'
+    | '/notifications'
+    | '/orders'
+    | '/profile'
+    | '/auth/otp'
+    | '/canteen/$id'
+    | '/item/$itemId'
+    | '/order/confirmation'
+    | '/order/pickup'
+    | '/order/tracking'
+    | '/reviews/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRouteWithChildren
+  CartRoute: typeof CartRoute
+  HomeRoute: typeof HomeRoute
+  NotificationsRoute: typeof NotificationsRoute
+  OrdersRoute: typeof OrdersRoute
+  ProfileRoute: typeof ProfileRoute
+  CanteenIdRoute: typeof CanteenIdRoute
+  ItemItemIdRoute: typeof ItemItemIdRoute
+  OrderConfirmationRoute: typeof OrderConfirmationRoute
+  OrderPickupRoute: typeof OrderPickupRoute
+  OrderTrackingRoute: typeof OrderTrackingRoute
+  ReviewsIdRoute: typeof ReviewsIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +262,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reviews/$id': {
+      id: '/reviews/$id'
+      path: '/reviews/$id'
+      fullPath: '/reviews/$id'
+      preLoaderRoute: typeof ReviewsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order/tracking': {
+      id: '/order/tracking'
+      path: '/order/tracking'
+      fullPath: '/order/tracking'
+      preLoaderRoute: typeof OrderTrackingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order/pickup': {
+      id: '/order/pickup'
+      path: '/order/pickup'
+      fullPath: '/order/pickup'
+      preLoaderRoute: typeof OrderPickupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order/confirmation': {
+      id: '/order/confirmation'
+      path: '/order/confirmation'
+      fullPath: '/order/confirmation'
+      preLoaderRoute: typeof OrderConfirmationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/item/$itemId': {
+      id: '/item/$itemId'
+      path: '/item/$itemId'
+      fullPath: '/item/$itemId'
+      preLoaderRoute: typeof ItemItemIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/canteen/$id': {
+      id: '/canteen/$id'
+      path: '/canteen/$id'
+      fullPath: '/canteen/$id'
+      preLoaderRoute: typeof CanteenIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/otp': {
+      id: '/auth/otp'
+      path: '/otp'
+      fullPath: '/auth/otp'
+      preLoaderRoute: typeof AuthOtpRouteImport
+      parentRoute: typeof AuthRoute
+    }
   }
 }
 
+interface AuthRouteChildren {
+  AuthOtpRoute: typeof AuthOtpRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthOtpRoute: AuthOtpRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRouteWithChildren,
+  CartRoute: CartRoute,
+  HomeRoute: HomeRoute,
+  NotificationsRoute: NotificationsRoute,
+  OrdersRoute: OrdersRoute,
+  ProfileRoute: ProfileRoute,
+  CanteenIdRoute: CanteenIdRoute,
+  ItemItemIdRoute: ItemItemIdRoute,
+  OrderConfirmationRoute: OrderConfirmationRoute,
+  OrderPickupRoute: OrderPickupRoute,
+  OrderTrackingRoute: OrderTrackingRoute,
+  ReviewsIdRoute: ReviewsIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

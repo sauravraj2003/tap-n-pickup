@@ -1,8 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { Minus, Plus, Mic } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { MobileFrame } from "@/components/MobileFrame";
 import { TopBar } from "@/components/TopBar";
+import { VoiceNote } from "@/components/VoiceNote";
 import { items } from "@/lib/data";
 
 export const Route = createFileRoute("/item/$itemId")({
@@ -69,9 +70,9 @@ function ItemPage() {
             rows={3}
             className="w-full bg-surface ring-1 ring-border rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-foreground resize-none"
           />
-          <button className="mt-3 w-full bg-surface ring-1 ring-border rounded-2xl py-3 text-xs font-medium uppercase tracking-widest flex items-center justify-center gap-2 text-muted-foreground">
-            <Mic className="size-4" /> Record voice request
-          </button>
+          <div className="mt-3">
+            <VoiceNote />
+          </div>
         </div>
 
         <div className="mt-8">

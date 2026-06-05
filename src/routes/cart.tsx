@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { MobileFrame } from "@/components/MobileFrame";
 import { TopBar } from "@/components/TopBar";
+import { VoiceNote } from "@/components/VoiceNote";
 import { items } from "@/lib/data";
 
 export const Route = createFileRoute("/cart")({
@@ -16,6 +17,7 @@ function Cart() {
   ];
   const [lines, setLines] = useState(initial);
   const [pay, setPay] = useState<"full" | "down" | "pickup">("full");
+  const [orderNote, setOrderNote] = useState("");
 
   const subtotal = lines.reduce((s, l) => s + l.price * l.qty, 0);
   const platform = 0.49;
@@ -51,6 +53,20 @@ function Cart() {
               <Link to="/home" className="text-xs font-medium underline mt-2 inline-block">Browse canteens</Link>
             </div>
           )}
+        </div>
+
+        <div className="mt-8">
+          <h3 className="text-xs uppercase tracking-widest text-muted-foreground mb-3">Message to the kitchen</h3>
+          <textarea
+            value={orderNote}
+            onChange={(e) => setOrderNote(e.target.value)}
+            placeholder="Allergies, pickup timing, special requests…"
+            rows={3}
+            className="w-full bg-surface ring-1 ring-border rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-foreground resize-none"
+          />
+          <div className="mt-3">
+            <VoiceNote label="Record audio message" />
+          </div>
         </div>
 
         <div className="mt-8">

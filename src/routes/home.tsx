@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Search, MapPin, Star, Clock } from "lucide-react";
 import { MobileFrame } from "@/components/MobileFrame";
 import { BottomNav } from "@/components/BottomNav";
+import { CanteenStories } from "@/components/CanteenStories";
 import { canteens } from "@/lib/data";
 
 export const Route = createFileRoute("/home")({
@@ -76,11 +77,20 @@ function Home() {
       </header>
 
       <div className="flex-1 overflow-y-auto px-5 pb-32">
+        {/* Canteen stories — Instagram-style horizontal scroll */}
+        <div className="mb-5 -mt-1">
+          <div className="flex items-baseline justify-between mb-3">
+            <h2 className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">Canteens nearby</h2>
+            <span className="text-[10px] font-mono text-muted-foreground">{canteens.filter(c => c.open).length} open</span>
+          </div>
+          <CanteenStories />
+        </div>
+
         {/* Active order strip */}
         <Link to="/order/tracking" className="block mb-6 animate-rise">
           <div className="bg-zinc-900 text-zinc-50 rounded-2xl p-4 flex items-center gap-4">
             <div className="size-12 rounded-xl bg-zinc-800 grid place-items-center font-mono text-sm font-bold">
-              #042
+              LIVE
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[10px] font-medium uppercase tracking-widest text-zinc-400">Preparing your meal</p>

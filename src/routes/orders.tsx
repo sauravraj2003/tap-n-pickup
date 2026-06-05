@@ -3,12 +3,14 @@ import { MobileFrame } from "@/components/MobileFrame";
 import { TopBar } from "@/components/TopBar";
 import { BottomNav } from "@/components/BottomNav";
 import { orderHistory } from "@/lib/data";
+import { lastToken } from "@/lib/token";
 
 export const Route = createFileRoute("/orders")({
   component: Orders,
 });
 
 function Orders() {
+  const tokenStr = String(lastToken()).padStart(3, "0");
   return (
     <MobileFrame>
       <TopBar back={false} title="Your orders" />
@@ -18,9 +20,9 @@ function Orders() {
             <div>
               <p className="text-[10px] uppercase tracking-widest text-zinc-400">In progress</p>
               <p className="text-sm font-semibold mt-1">The Artisan Deli</p>
-              <p className="text-xs text-zinc-400">Token #42 · 6 min remaining</p>
+              <p className="text-xs text-zinc-400">Token #{tokenStr} · 6 min remaining</p>
             </div>
-            <div className="text-2xl font-mono">#42</div>
+            <div className="text-2xl font-mono">#{tokenStr}</div>
           </div>
           <div className="mt-3 h-1 bg-zinc-800 rounded-full overflow-hidden">
             <div className="h-full w-1/2 bg-zinc-50" />

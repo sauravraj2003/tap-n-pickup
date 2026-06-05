@@ -1,12 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { MapPin, Clock } from "lucide-react";
 import { MobileFrame } from "@/components/MobileFrame";
+import { mintToken } from "@/lib/token";
 
 export const Route = createFileRoute("/order/confirmation")({
   component: Confirm,
 });
 
 function Confirm() {
+  const [token] = useState(() => mintToken());
+  const tokenStr = String(token).padStart(3, "0");
   return (
     <MobileFrame dark>
       <div className="flex-1 flex flex-col items-center px-7 pt-16 pb-8 bg-zinc-950 text-zinc-50">
@@ -25,7 +29,7 @@ function Confirm() {
           </div>
           <div className="flex-1 flex flex-col items-center justify-center pt-4 px-6">
             <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-[0.3em] mb-2">Your token</span>
-            <span className="text-[110px] font-mono text-zinc-900 tracking-tighter leading-none">#42</span>
+            <span className="text-[110px] font-mono text-zinc-900 tracking-tighter leading-none">#{tokenStr}</span>
             <div className="mt-6 flex flex-col items-center">
               <span className="text-[10px] text-zinc-500 uppercase tracking-widest mb-1">Queue position</span>
               <span className="text-xl font-semibold text-zinc-900">3rd in line</span>

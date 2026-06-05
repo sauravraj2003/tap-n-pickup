@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MobileFrame } from "@/components/MobileFrame";
 import { TopBar } from "@/components/TopBar";
+import { lastToken } from "@/lib/token";
 
 export const Route = createFileRoute("/order/tracking")({
   component: Tracking,
@@ -14,6 +15,7 @@ const stages = [
 ] as const;
 
 function Tracking() {
+  const tokenStr = String(lastToken()).padStart(3, "0");
   return (
     <MobileFrame dark>
       <div className="bg-zinc-950 text-zinc-50 flex-1 flex flex-col">
@@ -21,7 +23,7 @@ function Tracking() {
         <div className="flex-1 overflow-y-auto px-7 pb-8">
           <div className="text-center mt-2">
             <span className="text-[10px] uppercase tracking-[0.25em] text-zinc-500">Your token</span>
-            <div className="text-7xl font-mono tracking-tighter mt-1">#42</div>
+            <div className="text-7xl font-mono tracking-tighter mt-1">#{tokenStr}</div>
             <p className="text-xs text-zinc-500 mt-2">Queue position · 2nd in line · 6 min left</p>
           </div>
 

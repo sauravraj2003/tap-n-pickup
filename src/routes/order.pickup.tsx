@@ -1,12 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Bell, MapPin } from "lucide-react";
 import { MobileFrame } from "@/components/MobileFrame";
+import { lastToken } from "@/lib/token";
 
 export const Route = createFileRoute("/order/pickup")({
   component: Pickup,
 });
 
 function Pickup() {
+  const tokenStr = String(lastToken()).padStart(3, "0");
   return (
     <MobileFrame dark>
       <div className="flex-1 bg-gradient-to-b from-emerald-950 via-zinc-950 to-zinc-950 text-zinc-50 flex flex-col px-7 pt-16 pb-8">
@@ -25,7 +27,7 @@ function Pickup() {
           <div className="text-[160px] font-mono leading-none tracking-tighter text-zinc-50">02</div>
           <div className="mt-8">
             <span className="text-[10px] uppercase tracking-widest text-zinc-500">Show token</span>
-            <div className="text-3xl font-mono mt-1">#42</div>
+            <div className="text-3xl font-mono mt-1">#{tokenStr}</div>
           </div>
           <p className="text-sm text-zinc-400 mt-8 max-w-xs mx-auto">
             Your order is ready at <b className="text-zinc-50">The Artisan Deli</b>. Please pick up within 10 minutes.

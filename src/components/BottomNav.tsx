@@ -11,7 +11,8 @@ const tabs = [
 export function BottomNav() {
   const path = useRouterState({ select: (s) => s.location.pathname });
   return (
-    <nav className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[92%] bg-zinc-950/95 backdrop-blur-xl rounded-2xl py-2.5 px-3 flex justify-between items-center ring-1 ring-white/10 shadow-xl z-50">
+    <nav className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-[92%] max-w-md bg-zinc-950/95 backdrop-blur-xl rounded-2xl py-2.5 px-3 flex justify-between items-center ring-1 ring-white/10 shadow-xl z-50">
+
       {tabs.map((t) => {
         const Icon = t.icon;
         const active = path === t.to || (t.to === "/orders" && path.startsWith("/order"));

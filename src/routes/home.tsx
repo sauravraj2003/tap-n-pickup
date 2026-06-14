@@ -1,156 +1,224 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Search, MapPin, Star, Clock } from "lucide-react";
-import { MobileFrame } from "@/components/MobileFrame";
-import { BottomNav } from "@/components/BottomNav";
-import { CanteenStories } from "@/components/CanteenStories";
+import { Search, MapPin, ChevronDown, Star, Utensils, Bike, Wine, SlidersHorizontal, ChevronRight, Bell, User } from "lucide-react";
 import { canteens } from "@/lib/data";
 
 export const Route = createFileRoute("/home")({
-  head: () => ({
-    meta: [{ title: "Home — BookIt" }],
-  }),
+  head: () => ({ meta: [{ title: "Home — BookIt" }] }),
   component: Home,
 });
 
-function CanteenCard({ c, index }: { c: typeof canteens[number]; index: number }) {
-  return (
-    <Link
-      to="/canteen/$id"
-      params={{ id: c.id }}
-      className="block group animate-rise"
-      style={{ animationDelay: `${index * 70}ms` }}
-    >
-      <div className="relative">
-        <img
-          src={c.image}
-          alt={c.name}
-          loading="lazy"
-          width={1024}
-          height={640}
-          className="w-full aspect-[16/10] object-cover rounded-2xl ring-1 ring-black/5 mb-3"
-        />
-        <div className="absolute top-3 left-3 bg-zinc-50/90 backdrop-blur px-2 py-1 rounded-lg flex items-center gap-1 text-[11px]">
-          <Star className="size-3 fill-zinc-900 stroke-zinc-900" />
-          <span className="font-semibold text-zinc-900">{c.rating}</span>
-          <span className="text-zinc-500">({c.reviews})</span>
-        </div>
-        <div className={`absolute bottom-3 right-3 backdrop-blur px-2.5 py-1 rounded-lg text-[10px] font-semibold uppercase tracking-wider ${
-          c.open ? "bg-zinc-900/90 text-zinc-50" : "bg-zinc-50/90 text-zinc-500"
-        }`}>
-          {c.open ? `${c.wait}m wait` : "Closed"}
-        </div>
-      </div>
-      <div className="flex justify-between items-start">
-        <div className="min-w-0">
-          <h3 className="text-base font-semibold truncate">{c.name}</h3>
-          <p className="text-sm text-muted-foreground truncate">{c.tagline}</p>
-        </div>
-        <div className="text-right flex-none ml-3">
-          <div className="text-[11px] font-mono text-muted-foreground">{c.distance}</div>
-        </div>
-      </div>
-    </Link>
-  );
-}
+const collections = [
+  { title: "Best Bars & Pubs", count: 14, img: canteens[0].image },
+  { title: "Great Cafes", count: 10, img: canteens[1].image },
+  { title: "Insta-worthy Spots", count: 7, img: canteens[3].image },
+  { title: "Best Lunch Places", count: 14, img: canteens[2].image },
+];
+
+const filters = ["Filters", "Offers", "Rating: 4.5+", "Quick Prep", "Outdoor seating", "Serves Coffee", "Open Now"];
+
+const tabs = [
+  { id: "dining", label: "Dining Out", icon: Utensils, active: true },
+  { id: "delivery", label: "Delivery", icon: Bike },
+  { id: "nightlife", label: "Nightlife", icon: Wine },
+];
 
 function Home() {
-  const open = canteens.filter((c) => c.open);
-  const topRated = [...canteens].sort((a, b) => b.rating - a.rating).slice(0, 3);
-
   return (
-    <MobileFrame>
-      <header className="px-5 pt-12 pb-4 flex-none">
-        <div className="flex items-center justify-between mb-5">
-          <div className="flex flex-col">
-            <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">Pickup at</span>
-            <div className="flex items-center gap-1.5">
-              <MapPin className="size-3.5" />
-              <span className="text-sm font-semibold">Main Plaza Canteen</span>
+    <div className="min-h-screen bg-zinc-50 text-zinc-900">
+      {/* TOP BAR */}
+      <header className="bg-white border-b border-zinc-200 sticky top-0 z-30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-4 flex items-center gap-3 sm:gap-6">
+          <Link to="/" className="flex items-center gap-2 shrink-0">
+            <div className="size-9 rounded-xl bg-zinc-900 text-zinc-50 grid place-items-center font-mono font-bold">B</div>
+            <span className="hidden sm:block text-xl font-bold tracking-tight">BookIt</span>
+          </Link>
+
+          <div className="flex-1 min-w-0 hidden md:flex items-center gap-0 bg-white ring-1 ring-zinc-200 rounded-xl shadow-sm h-12 overflow-hidden">
+            <div className="flex items-center gap-2 px-4 h-full border-r border-zinc-200 min-w-0">
+              <MapPin className="size-4 text-zinc-900 shrink-0" />
+              <span className="text-sm font-medium truncate">Main Campus</span>
+              <ChevronDown className="size-4 text-zinc-500 shrink-0" />
+            </div>
+            <div className="flex items-center gap-2 px-4 flex-1 min-w-0">
+              <Search className="size-4 text-zinc-500 shrink-0" />
+              <input className="text-sm bg-transparent outline-none flex-1 min-w-0 placeholder:text-zinc-500" placeholder="Search for canteen, cuisine or a dish" />
             </div>
           </div>
-          <Link to="/profile" className="size-10 rounded-full bg-gradient-to-br from-zinc-300 to-zinc-500 ring-1 ring-black/5" />
+
+          <button className="md:hidden ml-auto size-10 rounded-xl ring-1 ring-zinc-200 grid place-items-center">
+            <Search className="size-4" />
+          </button>
+
+          <div className="hidden lg:flex items-center gap-5 shrink-0">
+            <Link to="/notifications" className="text-zinc-700 hover:text-zinc-900"><Bell className="size-5" /></Link>
+            <Link to="/profile" className="text-zinc-700 hover:text-zinc-900"><User className="size-5" /></Link>
+          </div>
         </div>
-        <div className="w-full bg-surface ring-1 ring-border rounded-2xl px-4 py-3 flex items-center gap-3">
-          <Search className="size-4 text-muted-foreground" />
-          <span className="text-sm text-muted-foreground">Find your favorite meal</span>
+
+        {/* Tabs */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+          <div className="flex gap-2 sm:gap-8 overflow-x-auto no-scrollbar">
+            {tabs.map((t) => {
+              const Icon = t.icon;
+              return (
+                <button
+                  key={t.id}
+                  className={`flex items-center gap-3 py-4 border-b-2 whitespace-nowrap transition-colors ${
+                    t.active ? "border-zinc-900 text-zinc-900" : "border-transparent text-zinc-500 hover:text-zinc-900"
+                  }`}
+                >
+                  <span className={`size-9 rounded-full grid place-items-center ${t.active ? "bg-zinc-900 text-zinc-50" : "bg-zinc-100 text-zinc-700"}`}>
+                    <Icon className="size-4" />
+                  </span>
+                  <span className="text-sm font-semibold">{t.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </header>
 
-      <div className="flex-1 overflow-y-auto px-5 pb-32">
-        {/* Canteen stories — Instagram-style horizontal scroll */}
-        <div className="mb-5 -mt-1">
-          <div className="flex items-baseline justify-between mb-3">
-            <h2 className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">Canteens nearby</h2>
-            <span className="text-[10px] font-mono text-muted-foreground">{canteens.filter(c => c.open).length} open</span>
-          </div>
-          <CanteenStories />
-        </div>
-
-        {/* Active order strip */}
-        <Link to="/order/tracking" className="block mb-6 animate-rise">
-          <div className="bg-zinc-900 text-zinc-50 rounded-2xl p-4 flex items-center gap-4">
-            <div className="size-12 rounded-xl bg-zinc-800 grid place-items-center font-mono text-sm font-bold">
-              LIVE
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-[10px] font-medium uppercase tracking-widest text-zinc-400">Preparing your meal</p>
-              <p className="text-sm font-semibold truncate">The Artisan Deli — ready in ~6 min</p>
-            </div>
-            <Clock className="size-4 text-zinc-400" />
-          </div>
-        </Link>
-
-        <div className="flex gap-2 mb-5 overflow-x-auto -mx-5 px-5 no-scrollbar">
-          {["Nearby", "Top Rated", "Quick Prep", "Open Now", "Budget"].map((t, i) => (
-            <button
-              key={t}
-              className={`px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap ring-1 ${
-                i === 0 ? "bg-zinc-900 text-zinc-50 ring-zinc-900" : "bg-surface text-muted-foreground ring-border"
-              }`}
-            >
-              {t}
+      {/* COLLECTIONS */}
+      <section>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">Collections</h1>
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-6">
+            <p className="text-sm sm:text-base text-zinc-600 max-w-2xl">
+              Explore curated lists of top canteens, cafes, and quick bites on campus — based on trends.
+            </p>
+            <button className="text-sm font-semibold text-zinc-900 inline-flex items-center gap-1 hover:underline self-start sm:self-auto">
+              All collections <ChevronRight className="size-4" />
             </button>
-          ))}
-        </div>
-
-        <section className="mb-8">
-          <div className="flex justify-between items-end mb-4">
-            <h2 className="text-xl font-semibold tracking-tight text-balance">Popular near you</h2>
-            <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">View all</span>
           </div>
-          <div className="space-y-6">
-            {open.map((c, i) => (
-              <CanteenCard key={c.id} c={c} index={i} />
-            ))}
-          </div>
-        </section>
 
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold tracking-tight mb-4">Top rated this week</h2>
-          <div className="flex gap-4 overflow-x-auto -mx-5 px-5 pb-2 no-scrollbar">
-            {topRated.map((c) => (
-              <Link key={c.id} to="/canteen/$id" params={{ id: c.id }} className="flex-none w-48">
-                <img src={c.image} alt={c.name} loading="lazy" className="w-full aspect-square object-cover rounded-2xl ring-1 ring-black/5 mb-2" />
-                <h4 className="text-sm font-semibold truncate">{c.name}</h4>
-                <p className="text-xs text-muted-foreground flex items-center gap-1">
-                  <Star className="size-3 fill-foreground stroke-foreground" /> {c.rating} • {c.distance}
-                </p>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {collections.map((c, i) => (
+              <Link
+                key={c.title}
+                to="/canteen/$id"
+                params={{ id: canteens[i % canteens.length].id }}
+                className="relative aspect-[3/4] rounded-2xl overflow-hidden ring-1 ring-zinc-900/5 group animate-rise"
+                style={{ animationDelay: `${i * 60}ms` }}
+              >
+                <img src={c.img} alt={c.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/85 via-zinc-900/20 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 text-zinc-50">
+                  <h3 className="text-lg sm:text-xl font-bold leading-tight">{c.title}</h3>
+                  <div className="flex items-center gap-1 mt-1 text-xs font-medium opacity-90">
+                    {c.count} Places <ChevronRight className="size-3" />
+                  </div>
+                </div>
               </Link>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="mb-4">
-          <h2 className="text-xl font-semibold tracking-tight mb-4">Recommended for you</h2>
-          <div className="space-y-6">
-            {canteens.slice(1, 4).map((c, i) => (
-              <CanteenCard key={c.id} c={c} index={i} />
-            ))}
+      {/* FILTERS */}
+      <section className="bg-white border-y border-zinc-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-4 flex gap-3 overflow-x-auto no-scrollbar">
+          {filters.map((f, i) => (
+            <button
+              key={f}
+              className={`px-4 py-2 rounded-full text-sm font-medium ring-1 whitespace-nowrap transition-colors bg-white text-zinc-700 ${
+                i === 0 ? "ring-zinc-300 inline-flex items-center gap-2" : "ring-zinc-200 hover:ring-zinc-900"
+              }`}
+            >
+              {i === 0 && <SlidersHorizontal className="size-3.5" />}
+              {f}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* PROMO BANNER */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-8">
+        <div className="rounded-2xl bg-zinc-900 text-zinc-50 px-6 sm:px-10 py-8 sm:py-12 relative overflow-hidden">
+          <div className="relative z-10 max-w-md">
+            <p className="text-xs font-mono uppercase tracking-[0.2em] text-zinc-400 mb-3">BookIt Members</p>
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight leading-none">
+              Get up to<br />
+              <span className="text-amber-200">50% OFF</span>
+            </h2>
+            <p className="mt-4 text-sm text-zinc-300">On your dining bills, every weekday lunch.</p>
           </div>
-        </section>
-      </div>
+          <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden sm:block opacity-60">
+            <img src={canteens[0].image} alt="" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/60 to-transparent" />
+          </div>
+        </div>
+      </section>
 
-      <BottomNav />
-    </MobileFrame>
+      {/* BEST FOOD */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pb-20">
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-6">Best Food on Campus</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+          {[...canteens, ...canteens].map((c, i) => (
+            <Link
+              key={`${c.id}-${i}`}
+              to="/canteen/$id"
+              params={{ id: c.id }}
+              className="group animate-rise"
+              style={{ animationDelay: `${(i % 6) * 50}ms` }}
+            >
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden ring-1 ring-zinc-900/5 mb-3">
+                <img src={c.image} alt={c.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute top-3 left-3 bg-zinc-900 text-zinc-50 text-[10px] font-mono uppercase tracking-widest px-2 py-1 rounded">
+                  Promoted
+                </div>
+                <div className="absolute bottom-3 left-3 bg-zinc-900/90 text-zinc-50 text-[11px] font-semibold px-2.5 py-1 rounded-md">
+                  Flat {10 + ((i * 5) % 30)}% OFF
+                </div>
+              </div>
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="text-base font-bold tracking-tight truncate flex-1">{c.name}</h3>
+                <div className="flex items-center gap-1 bg-zinc-900 text-zinc-50 text-xs font-bold px-1.5 py-0.5 rounded shrink-0">
+                  {c.rating}
+                  <Star className="size-3 fill-zinc-50 stroke-zinc-50" />
+                </div>
+              </div>
+              <div className="flex justify-between items-baseline mt-1.5 text-sm">
+                <p className="text-zinc-500 truncate flex-1 mr-3">{c.tags.join(", ")}</p>
+                <p className="text-zinc-700 font-medium whitespace-nowrap">₹{300 + i * 50} for two</p>
+              </div>
+              <div className="flex justify-between items-baseline mt-1 text-sm">
+                <p className={`font-medium ${c.open ? "text-emerald-700" : "text-rose-700"}`}>
+                  {c.open ? `Open · ${c.wait}m wait` : "Opens at 12 noon"}
+                </p>
+                <p className="text-zinc-500 font-mono text-xs">{c.distance}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-zinc-900 text-zinc-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="size-8 rounded-lg bg-zinc-50 text-zinc-900 grid place-items-center font-mono font-bold">B</div>
+              <span className="text-zinc-50 font-bold">BookIt</span>
+            </div>
+            <p className="text-zinc-500 text-xs leading-relaxed">Skip the queue. Order ahead at your favourite canteens.</p>
+          </div>
+          {[
+            { title: "Company", links: ["About", "Careers", "Team", "Blog"] },
+            { title: "For You", links: ["Privacy", "Terms", "Security", "Contact"] },
+            { title: "For Canteens", links: ["Partner", "Apps", "Insights", "Support"] },
+          ].map((col) => (
+            <div key={col.title}>
+              <h4 className="text-zinc-50 font-semibold mb-3 text-xs uppercase tracking-widest">{col.title}</h4>
+              <ul className="space-y-2 text-zinc-400">
+                {col.links.map((l) => <li key={l}><a href="#" className="hover:text-zinc-50">{l}</a></li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div className="border-t border-zinc-800 py-6 text-center text-xs text-zinc-500 font-mono">
+          © {new Date().getFullYear()} BOOKIT — All rights reserved
+        </div>
+      </footer>
+    </div>
   );
 }

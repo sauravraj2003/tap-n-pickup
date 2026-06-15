@@ -9,11 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SigninRouteImport } from './routes/signin'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as CartRouteImport } from './routes/cart'
+import { Route as BarbersRouteImport } from './routes/barbers'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReviewsIdRouteImport } from './routes/reviews.$id'
@@ -24,6 +26,11 @@ import { Route as ItemItemIdRouteImport } from './routes/item.$itemId'
 import { Route as CanteenIdRouteImport } from './routes/canteen.$id'
 import { Route as AuthOtpRouteImport } from './routes/auth.otp'
 
+const SigninRoute = SigninRouteImport.update({
+  id: '/signin',
+  path: '/signin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -47,6 +54,11 @@ const HomeRoute = HomeRouteImport.update({
 const CartRoute = CartRouteImport.update({
   id: '/cart',
   path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BarbersRoute = BarbersRouteImport.update({
+  id: '/barbers',
+  path: '/barbers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -98,11 +110,13 @@ const AuthOtpRoute = AuthOtpRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/barbers': typeof BarbersRoute
   '/cart': typeof CartRoute
   '/home': typeof HomeRoute
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
+  '/signin': typeof SigninRoute
   '/auth/otp': typeof AuthOtpRoute
   '/canteen/$id': typeof CanteenIdRoute
   '/item/$itemId': typeof ItemItemIdRoute
@@ -114,11 +128,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/barbers': typeof BarbersRoute
   '/cart': typeof CartRoute
   '/home': typeof HomeRoute
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
+  '/signin': typeof SigninRoute
   '/auth/otp': typeof AuthOtpRoute
   '/canteen/$id': typeof CanteenIdRoute
   '/item/$itemId': typeof ItemItemIdRoute
@@ -131,11 +147,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/barbers': typeof BarbersRoute
   '/cart': typeof CartRoute
   '/home': typeof HomeRoute
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
+  '/signin': typeof SigninRoute
   '/auth/otp': typeof AuthOtpRoute
   '/canteen/$id': typeof CanteenIdRoute
   '/item/$itemId': typeof ItemItemIdRoute
@@ -149,11 +167,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/barbers'
     | '/cart'
     | '/home'
     | '/notifications'
     | '/orders'
     | '/profile'
+    | '/signin'
     | '/auth/otp'
     | '/canteen/$id'
     | '/item/$itemId'
@@ -165,11 +185,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/barbers'
     | '/cart'
     | '/home'
     | '/notifications'
     | '/orders'
     | '/profile'
+    | '/signin'
     | '/auth/otp'
     | '/canteen/$id'
     | '/item/$itemId'
@@ -181,11 +203,13 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/auth'
+    | '/barbers'
     | '/cart'
     | '/home'
     | '/notifications'
     | '/orders'
     | '/profile'
+    | '/signin'
     | '/auth/otp'
     | '/canteen/$id'
     | '/item/$itemId'
@@ -198,11 +222,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
+  BarbersRoute: typeof BarbersRoute
   CartRoute: typeof CartRoute
   HomeRoute: typeof HomeRoute
   NotificationsRoute: typeof NotificationsRoute
   OrdersRoute: typeof OrdersRoute
   ProfileRoute: typeof ProfileRoute
+  SigninRoute: typeof SigninRoute
   CanteenIdRoute: typeof CanteenIdRoute
   ItemItemIdRoute: typeof ItemItemIdRoute
   OrderConfirmationRoute: typeof OrderConfirmationRoute
@@ -213,6 +239,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/signin': {
+      id: '/signin'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof SigninRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile': {
       id: '/profile'
       path: '/profile'
@@ -246,6 +279,13 @@ declare module '@tanstack/react-router' {
       path: '/cart'
       fullPath: '/cart'
       preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/barbers': {
+      id: '/barbers'
+      path: '/barbers'
+      fullPath: '/barbers'
+      preLoaderRoute: typeof BarbersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -327,11 +367,13 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
+  BarbersRoute: BarbersRoute,
   CartRoute: CartRoute,
   HomeRoute: HomeRoute,
   NotificationsRoute: NotificationsRoute,
   OrdersRoute: OrdersRoute,
   ProfileRoute: ProfileRoute,
+  SigninRoute: SigninRoute,
   CanteenIdRoute: CanteenIdRoute,
   ItemItemIdRoute: ItemItemIdRoute,
   OrderConfirmationRoute: OrderConfirmationRoute,

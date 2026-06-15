@@ -9,15 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrackRouteImport } from './routes/track'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as HomeRouteImport } from './routes/home'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as BarbersRouteImport } from './routes/barbers'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VendorIdRouteImport } from './routes/vendor.$id'
 import { Route as ReviewsIdRouteImport } from './routes/reviews.$id'
 import { Route as OrderTrackingRouteImport } from './routes/order.tracking'
 import { Route as OrderPickupRouteImport } from './routes/order.pickup'
@@ -26,6 +29,11 @@ import { Route as ItemItemIdRouteImport } from './routes/item.$itemId'
 import { Route as CanteenIdRouteImport } from './routes/canteen.$id'
 import { Route as AuthOtpRouteImport } from './routes/auth.otp'
 
+const TrackRoute = TrackRouteImport.update({
+  id: '/track',
+  path: '/track',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SigninRoute = SigninRouteImport.update({
   id: '/signin',
   path: '/signin',
@@ -51,6 +59,11 @@ const HomeRoute = HomeRouteImport.update({
   path: '/home',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CartRoute = CartRouteImport.update({
   id: '/cart',
   path: '/cart',
@@ -69,6 +82,11 @@ const AuthRoute = AuthRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VendorIdRoute = VendorIdRouteImport.update({
+  id: '/vendor/$id',
+  path: '/vendor/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReviewsIdRoute = ReviewsIdRouteImport.update({
@@ -112,11 +130,13 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRouteWithChildren
   '/barbers': typeof BarbersRoute
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
   '/home': typeof HomeRoute
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
   '/signin': typeof SigninRoute
+  '/track': typeof TrackRoute
   '/auth/otp': typeof AuthOtpRoute
   '/canteen/$id': typeof CanteenIdRoute
   '/item/$itemId': typeof ItemItemIdRoute
@@ -124,17 +144,20 @@ export interface FileRoutesByFullPath {
   '/order/pickup': typeof OrderPickupRoute
   '/order/tracking': typeof OrderTrackingRoute
   '/reviews/$id': typeof ReviewsIdRoute
+  '/vendor/$id': typeof VendorIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
   '/barbers': typeof BarbersRoute
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
   '/home': typeof HomeRoute
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
   '/signin': typeof SigninRoute
+  '/track': typeof TrackRoute
   '/auth/otp': typeof AuthOtpRoute
   '/canteen/$id': typeof CanteenIdRoute
   '/item/$itemId': typeof ItemItemIdRoute
@@ -142,6 +165,7 @@ export interface FileRoutesByTo {
   '/order/pickup': typeof OrderPickupRoute
   '/order/tracking': typeof OrderTrackingRoute
   '/reviews/$id': typeof ReviewsIdRoute
+  '/vendor/$id': typeof VendorIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -149,11 +173,13 @@ export interface FileRoutesById {
   '/auth': typeof AuthRouteWithChildren
   '/barbers': typeof BarbersRoute
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
   '/home': typeof HomeRoute
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
   '/signin': typeof SigninRoute
+  '/track': typeof TrackRoute
   '/auth/otp': typeof AuthOtpRoute
   '/canteen/$id': typeof CanteenIdRoute
   '/item/$itemId': typeof ItemItemIdRoute
@@ -161,6 +187,7 @@ export interface FileRoutesById {
   '/order/pickup': typeof OrderPickupRoute
   '/order/tracking': typeof OrderTrackingRoute
   '/reviews/$id': typeof ReviewsIdRoute
+  '/vendor/$id': typeof VendorIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -169,11 +196,13 @@ export interface FileRouteTypes {
     | '/auth'
     | '/barbers'
     | '/cart'
+    | '/checkout'
     | '/home'
     | '/notifications'
     | '/orders'
     | '/profile'
     | '/signin'
+    | '/track'
     | '/auth/otp'
     | '/canteen/$id'
     | '/item/$itemId'
@@ -181,17 +210,20 @@ export interface FileRouteTypes {
     | '/order/pickup'
     | '/order/tracking'
     | '/reviews/$id'
+    | '/vendor/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/barbers'
     | '/cart'
+    | '/checkout'
     | '/home'
     | '/notifications'
     | '/orders'
     | '/profile'
     | '/signin'
+    | '/track'
     | '/auth/otp'
     | '/canteen/$id'
     | '/item/$itemId'
@@ -199,17 +231,20 @@ export interface FileRouteTypes {
     | '/order/pickup'
     | '/order/tracking'
     | '/reviews/$id'
+    | '/vendor/$id'
   id:
     | '__root__'
     | '/'
     | '/auth'
     | '/barbers'
     | '/cart'
+    | '/checkout'
     | '/home'
     | '/notifications'
     | '/orders'
     | '/profile'
     | '/signin'
+    | '/track'
     | '/auth/otp'
     | '/canteen/$id'
     | '/item/$itemId'
@@ -217,6 +252,7 @@ export interface FileRouteTypes {
     | '/order/pickup'
     | '/order/tracking'
     | '/reviews/$id'
+    | '/vendor/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -224,21 +260,31 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   BarbersRoute: typeof BarbersRoute
   CartRoute: typeof CartRoute
+  CheckoutRoute: typeof CheckoutRoute
   HomeRoute: typeof HomeRoute
   NotificationsRoute: typeof NotificationsRoute
   OrdersRoute: typeof OrdersRoute
   ProfileRoute: typeof ProfileRoute
   SigninRoute: typeof SigninRoute
+  TrackRoute: typeof TrackRoute
   CanteenIdRoute: typeof CanteenIdRoute
   ItemItemIdRoute: typeof ItemItemIdRoute
   OrderConfirmationRoute: typeof OrderConfirmationRoute
   OrderPickupRoute: typeof OrderPickupRoute
   OrderTrackingRoute: typeof OrderTrackingRoute
   ReviewsIdRoute: typeof ReviewsIdRoute
+  VendorIdRoute: typeof VendorIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/track': {
+      id: '/track'
+      path: '/track'
+      fullPath: '/track'
+      preLoaderRoute: typeof TrackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signin': {
       id: '/signin'
       path: '/signin'
@@ -274,6 +320,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cart': {
       id: '/cart'
       path: '/cart'
@@ -300,6 +353,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vendor/$id': {
+      id: '/vendor/$id'
+      path: '/vendor/$id'
+      fullPath: '/vendor/$id'
+      preLoaderRoute: typeof VendorIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reviews/$id': {
@@ -369,17 +429,20 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   BarbersRoute: BarbersRoute,
   CartRoute: CartRoute,
+  CheckoutRoute: CheckoutRoute,
   HomeRoute: HomeRoute,
   NotificationsRoute: NotificationsRoute,
   OrdersRoute: OrdersRoute,
   ProfileRoute: ProfileRoute,
   SigninRoute: SigninRoute,
+  TrackRoute: TrackRoute,
   CanteenIdRoute: CanteenIdRoute,
   ItemItemIdRoute: ItemItemIdRoute,
   OrderConfirmationRoute: OrderConfirmationRoute,
   OrderPickupRoute: OrderPickupRoute,
   OrderTrackingRoute: OrderTrackingRoute,
   ReviewsIdRoute: ReviewsIdRoute,
+  VendorIdRoute: VendorIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

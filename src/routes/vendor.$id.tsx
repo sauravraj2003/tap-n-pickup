@@ -72,7 +72,7 @@ function VendorDetail() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10">
         <h2 className="text-2xl font-bold tracking-tight mb-6">Menu</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {menu.map((item) => (
+          {menu.map((item: typeof menu[number]) => (
             <div key={item.id} className="bg-white ring-1 ring-zinc-200 rounded-2xl p-4 flex gap-4">
               <img src={item.image} alt={item.name} className="size-24 rounded-xl object-cover ring-1 ring-zinc-200" />
               <div className="flex-1 min-w-0">

@@ -9,13 +9,22 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrackRouteImport } from './routes/track'
+import { Route as SigninRouteImport } from './routes/signin'
+import { Route as RewardsRouteImport } from './routes/rewards'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as MerchantRouteImport } from './routes/merchant'
 import { Route as HomeRouteImport } from './routes/home'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
+import { Route as BarbersRouteImport } from './routes/barbers'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ApplyRouteImport } from './routes/apply'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VendorIdRouteImport } from './routes/vendor.$id'
 import { Route as ReviewsIdRouteImport } from './routes/reviews.$id'
 import { Route as OrderTrackingRouteImport } from './routes/order.tracking'
 import { Route as OrderPickupRouteImport } from './routes/order.pickup'
@@ -24,6 +33,21 @@ import { Route as ItemItemIdRouteImport } from './routes/item.$itemId'
 import { Route as CanteenIdRouteImport } from './routes/canteen.$id'
 import { Route as AuthOtpRouteImport } from './routes/auth.otp'
 
+const TrackRoute = TrackRouteImport.update({
+  id: '/track',
+  path: '/track',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SigninRoute = SigninRouteImport.update({
+  id: '/signin',
+  path: '/signin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RewardsRoute = RewardsRouteImport.update({
+  id: '/rewards',
+  path: '/rewards',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -39,9 +63,19 @@ const NotificationsRoute = NotificationsRouteImport.update({
   path: '/notifications',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MerchantRoute = MerchantRouteImport.update({
+  id: '/merchant',
+  path: '/merchant',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CartRoute = CartRouteImport.update({
@@ -49,14 +83,34 @@ const CartRoute = CartRouteImport.update({
   path: '/cart',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BarbersRoute = BarbersRouteImport.update({
+  id: '/barbers',
+  path: '/barbers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApplyRoute = ApplyRouteImport.update({
+  id: '/apply',
+  path: '/apply',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VendorIdRoute = VendorIdRouteImport.update({
+  id: '/vendor/$id',
+  path: '/vendor/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReviewsIdRoute = ReviewsIdRouteImport.update({
@@ -97,12 +151,20 @@ const AuthOtpRoute = AuthOtpRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/apply': typeof ApplyRoute
   '/auth': typeof AuthRouteWithChildren
+  '/barbers': typeof BarbersRoute
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
   '/home': typeof HomeRoute
+  '/merchant': typeof MerchantRoute
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
+  '/rewards': typeof RewardsRoute
+  '/signin': typeof SigninRoute
+  '/track': typeof TrackRoute
   '/auth/otp': typeof AuthOtpRoute
   '/canteen/$id': typeof CanteenIdRoute
   '/item/$itemId': typeof ItemItemIdRoute
@@ -110,15 +172,24 @@ export interface FileRoutesByFullPath {
   '/order/pickup': typeof OrderPickupRoute
   '/order/tracking': typeof OrderTrackingRoute
   '/reviews/$id': typeof ReviewsIdRoute
+  '/vendor/$id': typeof VendorIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/apply': typeof ApplyRoute
   '/auth': typeof AuthRouteWithChildren
+  '/barbers': typeof BarbersRoute
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
   '/home': typeof HomeRoute
+  '/merchant': typeof MerchantRoute
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
+  '/rewards': typeof RewardsRoute
+  '/signin': typeof SigninRoute
+  '/track': typeof TrackRoute
   '/auth/otp': typeof AuthOtpRoute
   '/canteen/$id': typeof CanteenIdRoute
   '/item/$itemId': typeof ItemItemIdRoute
@@ -126,16 +197,25 @@ export interface FileRoutesByTo {
   '/order/pickup': typeof OrderPickupRoute
   '/order/tracking': typeof OrderTrackingRoute
   '/reviews/$id': typeof ReviewsIdRoute
+  '/vendor/$id': typeof VendorIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/apply': typeof ApplyRoute
   '/auth': typeof AuthRouteWithChildren
+  '/barbers': typeof BarbersRoute
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
   '/home': typeof HomeRoute
+  '/merchant': typeof MerchantRoute
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
+  '/rewards': typeof RewardsRoute
+  '/signin': typeof SigninRoute
+  '/track': typeof TrackRoute
   '/auth/otp': typeof AuthOtpRoute
   '/canteen/$id': typeof CanteenIdRoute
   '/item/$itemId': typeof ItemItemIdRoute
@@ -143,17 +223,26 @@ export interface FileRoutesById {
   '/order/pickup': typeof OrderPickupRoute
   '/order/tracking': typeof OrderTrackingRoute
   '/reviews/$id': typeof ReviewsIdRoute
+  '/vendor/$id': typeof VendorIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
+    | '/apply'
     | '/auth'
+    | '/barbers'
     | '/cart'
+    | '/checkout'
     | '/home'
+    | '/merchant'
     | '/notifications'
     | '/orders'
     | '/profile'
+    | '/rewards'
+    | '/signin'
+    | '/track'
     | '/auth/otp'
     | '/canteen/$id'
     | '/item/$itemId'
@@ -161,15 +250,24 @@ export interface FileRouteTypes {
     | '/order/pickup'
     | '/order/tracking'
     | '/reviews/$id'
+    | '/vendor/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
+    | '/apply'
     | '/auth'
+    | '/barbers'
     | '/cart'
+    | '/checkout'
     | '/home'
+    | '/merchant'
     | '/notifications'
     | '/orders'
     | '/profile'
+    | '/rewards'
+    | '/signin'
+    | '/track'
     | '/auth/otp'
     | '/canteen/$id'
     | '/item/$itemId'
@@ -177,15 +275,24 @@ export interface FileRouteTypes {
     | '/order/pickup'
     | '/order/tracking'
     | '/reviews/$id'
+    | '/vendor/$id'
   id:
     | '__root__'
     | '/'
+    | '/admin'
+    | '/apply'
     | '/auth'
+    | '/barbers'
     | '/cart'
+    | '/checkout'
     | '/home'
+    | '/merchant'
     | '/notifications'
     | '/orders'
     | '/profile'
+    | '/rewards'
+    | '/signin'
+    | '/track'
     | '/auth/otp'
     | '/canteen/$id'
     | '/item/$itemId'
@@ -193,26 +300,57 @@ export interface FileRouteTypes {
     | '/order/pickup'
     | '/order/tracking'
     | '/reviews/$id'
+    | '/vendor/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  ApplyRoute: typeof ApplyRoute
   AuthRoute: typeof AuthRouteWithChildren
+  BarbersRoute: typeof BarbersRoute
   CartRoute: typeof CartRoute
+  CheckoutRoute: typeof CheckoutRoute
   HomeRoute: typeof HomeRoute
+  MerchantRoute: typeof MerchantRoute
   NotificationsRoute: typeof NotificationsRoute
   OrdersRoute: typeof OrdersRoute
   ProfileRoute: typeof ProfileRoute
+  RewardsRoute: typeof RewardsRoute
+  SigninRoute: typeof SigninRoute
+  TrackRoute: typeof TrackRoute
   CanteenIdRoute: typeof CanteenIdRoute
   ItemItemIdRoute: typeof ItemItemIdRoute
   OrderConfirmationRoute: typeof OrderConfirmationRoute
   OrderPickupRoute: typeof OrderPickupRoute
   OrderTrackingRoute: typeof OrderTrackingRoute
   ReviewsIdRoute: typeof ReviewsIdRoute
+  VendorIdRoute: typeof VendorIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/track': {
+      id: '/track'
+      path: '/track'
+      fullPath: '/track'
+      preLoaderRoute: typeof TrackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signin': {
+      id: '/signin'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof SigninRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rewards': {
+      id: '/rewards'
+      path: '/rewards'
+      fullPath: '/rewards'
+      preLoaderRoute: typeof RewardsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile': {
       id: '/profile'
       path: '/profile'
@@ -234,11 +372,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NotificationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/merchant': {
+      id: '/merchant'
+      path: '/merchant'
+      fullPath: '/merchant'
+      preLoaderRoute: typeof MerchantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/home': {
       id: '/home'
       path: '/home'
       fullPath: '/home'
       preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cart': {
@@ -248,6 +400,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CartRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/barbers': {
+      id: '/barbers'
+      path: '/barbers'
+      fullPath: '/barbers'
+      preLoaderRoute: typeof BarbersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -255,11 +414,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apply': {
+      id: '/apply'
+      path: '/apply'
+      fullPath: '/apply'
+      preLoaderRoute: typeof ApplyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vendor/$id': {
+      id: '/vendor/$id'
+      path: '/vendor/$id'
+      fullPath: '/vendor/$id'
+      preLoaderRoute: typeof VendorIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reviews/$id': {
@@ -326,29 +506,28 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  ApplyRoute: ApplyRoute,
   AuthRoute: AuthRouteWithChildren,
+  BarbersRoute: BarbersRoute,
   CartRoute: CartRoute,
+  CheckoutRoute: CheckoutRoute,
   HomeRoute: HomeRoute,
+  MerchantRoute: MerchantRoute,
   NotificationsRoute: NotificationsRoute,
   OrdersRoute: OrdersRoute,
   ProfileRoute: ProfileRoute,
+  RewardsRoute: RewardsRoute,
+  SigninRoute: SigninRoute,
+  TrackRoute: TrackRoute,
   CanteenIdRoute: CanteenIdRoute,
   ItemItemIdRoute: ItemItemIdRoute,
   OrderConfirmationRoute: OrderConfirmationRoute,
   OrderPickupRoute: OrderPickupRoute,
   OrderTrackingRoute: OrderTrackingRoute,
   ReviewsIdRoute: ReviewsIdRoute,
+  VendorIdRoute: VendorIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

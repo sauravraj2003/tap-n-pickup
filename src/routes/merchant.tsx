@@ -95,12 +95,12 @@ function Merchant() {
 }
 
 function IncomingCard({ order, onAccept, onReject }: { order: Order; onAccept: () => void; onReject: () => void }) {
-  // 1-minute acceptance timer
-  const secondsLeft = Math.max(0, Math.floor((order.acceptDeadline - Date.now()) / 1000));
+  const [, tick] = useState(0);
   useEffect(() => {
-    const t = setInterval(() => {/* re-render every 1s via parent */}, 1000);
+    const t = setInterval(() => tick((n) => n + 1), 1000);
     return () => clearInterval(t);
   }, []);
+  const secondsLeft = Math.max(0, Math.floor((order.acceptDeadline - Date.now()) / 1000));
   return (
     <div className="bg-white ring-1 ring-zinc-200 rounded-2xl p-5">
       <div className="flex items-start justify-between">

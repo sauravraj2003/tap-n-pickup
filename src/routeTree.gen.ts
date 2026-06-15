@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrackRouteImport } from './routes/track'
 import { Route as SigninRouteImport } from './routes/signin'
+import { Route as RewardsRouteImport } from './routes/rewards'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as NotificationsRouteImport } from './routes/notifications'
@@ -40,6 +41,11 @@ const TrackRoute = TrackRouteImport.update({
 const SigninRoute = SigninRouteImport.update({
   id: '/signin',
   path: '/signin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RewardsRoute = RewardsRouteImport.update({
+  id: '/rewards',
+  path: '/rewards',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
@@ -156,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
+  '/rewards': typeof RewardsRoute
   '/signin': typeof SigninRoute
   '/track': typeof TrackRoute
   '/auth/otp': typeof AuthOtpRoute
@@ -180,6 +187,7 @@ export interface FileRoutesByTo {
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
+  '/rewards': typeof RewardsRoute
   '/signin': typeof SigninRoute
   '/track': typeof TrackRoute
   '/auth/otp': typeof AuthOtpRoute
@@ -205,6 +213,7 @@ export interface FileRoutesById {
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
+  '/rewards': typeof RewardsRoute
   '/signin': typeof SigninRoute
   '/track': typeof TrackRoute
   '/auth/otp': typeof AuthOtpRoute
@@ -231,6 +240,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/orders'
     | '/profile'
+    | '/rewards'
     | '/signin'
     | '/track'
     | '/auth/otp'
@@ -255,6 +265,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/orders'
     | '/profile'
+    | '/rewards'
     | '/signin'
     | '/track'
     | '/auth/otp'
@@ -279,6 +290,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/orders'
     | '/profile'
+    | '/rewards'
     | '/signin'
     | '/track'
     | '/auth/otp'
@@ -304,6 +316,7 @@ export interface RootRouteChildren {
   NotificationsRoute: typeof NotificationsRoute
   OrdersRoute: typeof OrdersRoute
   ProfileRoute: typeof ProfileRoute
+  RewardsRoute: typeof RewardsRoute
   SigninRoute: typeof SigninRoute
   TrackRoute: typeof TrackRoute
   CanteenIdRoute: typeof CanteenIdRoute
@@ -329,6 +342,13 @@ declare module '@tanstack/react-router' {
       path: '/signin'
       fullPath: '/signin'
       preLoaderRoute: typeof SigninRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rewards': {
+      id: '/rewards'
+      path: '/rewards'
+      fullPath: '/rewards'
+      preLoaderRoute: typeof RewardsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile': {
@@ -497,6 +517,7 @@ const rootRouteChildren: RootRouteChildren = {
   NotificationsRoute: NotificationsRoute,
   OrdersRoute: OrdersRoute,
   ProfileRoute: ProfileRoute,
+  RewardsRoute: RewardsRoute,
   SigninRoute: SigninRoute,
   TrackRoute: TrackRoute,
   CanteenIdRoute: CanteenIdRoute,

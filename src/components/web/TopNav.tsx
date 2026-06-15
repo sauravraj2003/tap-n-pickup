@@ -38,7 +38,7 @@ export function TopNav({ activeTab = "canteens" }: { activeTab?: "canteens" | "b
             <span className="text-xs px-2 py-1 rounded-md bg-amber-100 text-amber-900 font-medium">Pending Approval</span>
           )}
           {user?.role === "user" && (
-            <Link to="/merchant/apply" className="text-zinc-700 hover:text-zinc-900">Apply as Merchant</Link>
+            <Link to="/apply" className="text-zinc-700 hover:text-zinc-900">Apply as Merchant</Link>
           )}
           <Link to="/checkout" className="relative text-zinc-700 hover:text-zinc-900">
             <ShoppingBag className="size-5" />

@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useAuth } from "@/lib/store";
+import { Utensils, Store } from "lucide-react";
+import { useAuth, type Role } from "@/lib/store";
 
 export const Route = createFileRoute("/signin")({
   head: () => ({ meta: [{ title: "Sign in — BookIt" }] }),
@@ -14,14 +15,30 @@ function SignIn() {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState<"user" | "merchant">("user");
+
+  const routeFor = (r: Role) => {
+    if (r === "admin") return "/admin" as const;
+    if (r === "merchant") return "/merchant" as const;
+    if (r === "merchant_pending") return "/merchant" as const;
+    return "/home" as const;
+  };
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) return toast.error("Email and password required");
-    const u = mode === "signin" ? signIn(email, password) : signUp(name || email.split("@")[0], email, password);
+    if (mode === "signup") {
+      if (!phone || phone.replace(/\D/g, "").length < 10) return toast.error("Enter a valid phone number");
+      if (password.length < 6) return toast.error("Password must be at least 6 characters");
+    }
+    const u =
+      mode === "signin"
+        ? signIn(email, password)
+        : signUp(name || email.split("@")[0], email, password, phone, role);
     toast.success(`Welcome, ${u.name}`);
-    router.navigate({ to: u.role === "admin" ? "/admin" : "/home" });
+    router.navigate({ to: routeFor(u.role) });
   };
 
   return (
@@ -48,7 +65,21 @@ function SignIn() {
           </div>
           <form onSubmit={submit} className="space-y-4">
             {mode === "signup" && (
-              <Field label="Full name" value={name} onChange={setName} placeholder="Arjun Singh" />
+              <>
+                <div>
+                  <span className="text-xs font-semibold uppercase tracking-widest text-zinc-600">I am a</span>
+                  <div className="mt-2 grid grid-cols-2 gap-2">
+                    <button type="button" onClick={() => setRole("user")} className={`flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium ring-1 transition-colors ${role === "user" ? "bg-zinc-900 text-zinc-50 ring-zinc-900" : "bg-white text-zinc-700 ring-zinc-200"}`}>
+                      <Utensils className="size-4" /> Student / Customer
+                    </button>
+                    <button type="button" onClick={() => setRole("merchant")} className={`flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium ring-1 transition-colors ${role === "merchant" ? "bg-zinc-900 text-zinc-50 ring-zinc-900" : "bg-white text-zinc-700 ring-zinc-200"}`}>
+                      <Store className="size-4" /> Merchant / Owner
+                    </button>
+                  </div>
+                </div>
+                <Field label="Full name" value={name} onChange={setName} placeholder="Arjun Singh" />
+                <Field label="Phone number" type="tel" value={phone} onChange={setPhone} placeholder="+91 98xxxxxxxx" />
+              </>
             )}
             <Field label="Email" type="email" value={email} onChange={setEmail} placeholder="you@campus.edu" />
             <Field label="Password" type="password" value={password} onChange={setPassword} placeholder="••••••••" />
@@ -57,7 +88,7 @@ function SignIn() {
             </button>
           </form>
           <p className="mt-6 text-xs text-zinc-500 text-center">
-            By continuing you agree to BookIt's Terms. Mocked auth — no real data sent.
+            One sign-in page for everyone — we'll take you to the right dashboard automatically.
           </p>
         </div>
       </div>

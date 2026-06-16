@@ -180,3 +180,24 @@ export const userFilters = [
   { id: "high-rewards", label: "High Rewards" },
   { id: "quick-prep", label: "Quick Prep" },
 ];
+
+export const ratingFilters = [
+  { id: "any", label: "All Ratings", min: 0 },
+  { id: "r2", label: "2★ & Above", min: 2 },
+  { id: "r3", label: "3★ & Above", min: 3 },
+  { id: "r4", label: "4★ & Above", min: 4 },
+];
+
+// Carousel category rows for the user dashboard. Each row picks vendors
+// from the master `vendors` list using a simple predicate so it stays
+// data-driven and easy to swap with a real backend query.
+export const carouselCategories: { id: string; title: string; subtitle: string; pick: (v: Vendor) => boolean }[] = [
+  { id: "popular-near-you", title: "Popular Near You", subtitle: "Trending within 5 minutes walk", pick: (v) => v.reviews > 300 && v.open },
+  { id: "best-rated", title: "Best Rated", subtitle: "Top-rated by students", pick: (v) => v.rating >= 4.4 },
+  { id: "breakfast", title: "Breakfast", subtitle: "Start your day right", pick: (v) => v.tags.some((t) => /south indian|bakery|coffee|snacks/i.test(t)) },
+  { id: "lunch", title: "Lunch Specials", subtitle: "Hearty midday meals", pick: (v) => v.tags.some((t) => /thali|north indian|punjabi|continental/i.test(t)) },
+  { id: "snacks", title: "Snacks", subtitle: "Quick bites between classes", pick: (v) => v.tags.some((t) => /snacks|sandwiches|noodles/i.test(t)) },
+  { id: "beverages", title: "Beverages", subtitle: "Chai, coffee & coolers", pick: (v) => v.tags.some((t) => /beverages|coffee/i.test(t)) },
+  { id: "healthy", title: "Healthy Options", subtitle: "Light, fresh & balanced", pick: (v) => v.avgPrep <= 12 && v.rating >= 4.0 },
+  { id: "recommended", title: "Recommended For You", subtitle: "Picked based on campus favorites", pick: (v) => v.rewardsRate >= 3 && v.open },
+];

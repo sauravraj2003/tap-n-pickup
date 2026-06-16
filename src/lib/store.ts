@@ -132,6 +132,16 @@ export function useAuth() {
       setUser(SEEDED_ADMIN);
       return SEEDED_ADMIN;
     }
+    // Look up existing registered user by email (mocked "DB")
+    try {
+      const raw = window.localStorage.getItem("campus:users");
+      const users: AuthUser[] = raw ? JSON.parse(raw) : [];
+      const found = users.find((u) => u.email.toLowerCase() === email.trim().toLowerCase());
+      if (found) {
+        setUser(found);
+        return found;
+      }
+    } catch {}
     const u: AuthUser = {
       id: `u-${Date.now()}`,
       email,
@@ -141,8 +151,14 @@ export function useAuth() {
     setUser(u);
     return u;
   };
-  const signUp = (name: string, email: string, _password: string) => {
-    const u: AuthUser = { id: `u-${Date.now()}`, email, name, role: "user" };
+  const signUp = (name: string, email: string, _password: string, phone?: string, role: Role = "user") => {
+    const u: AuthUser = { id: `u-${Date.now()}`, email, name, phone, role };
+    try {
+      const raw = window.localStorage.getItem("campus:users");
+      const users: AuthUser[] = raw ? JSON.parse(raw) : [];
+      const next = [...users.filter((x) => x.email.toLowerCase() !== email.toLowerCase()), u];
+      window.localStorage.setItem("campus:users", JSON.stringify(next));
+    } catch {}
     setUser(u);
     return u;
   };

@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ChevronRight, SlidersHorizontal } from "lucide-react";
+import { ChevronRight, SlidersHorizontal, Star } from "lucide-react";
 import { TopNav } from "@/components/web/TopNav";
 import { VendorCard } from "@/components/web/VendorCard";
-import { vendors, collections, userFilters } from "@/lib/campus-data";
+import { CarouselRow } from "@/components/web/CarouselRow";
+import { Footer } from "@/components/web/Footer";
+import { vendors, collections, userFilters, ratingFilters, carouselCategories } from "@/lib/campus-data";
 
 export const Route = createFileRoute("/home")({
   head: () => ({ meta: [{ title: "Canteens — BookIt" }] }),
@@ -16,17 +18,21 @@ function Home() {
 
 export function VendorFeed({ kind }: { kind: "canteen" | "barber" }) {
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [rating, setRating] = useState<string>("any");
   const [visible, setVisible] = useState(8);
   const sentinel = useRef<HTMLDivElement>(null);
 
+  const minRating = ratingFilters.find((r) => r.id === rating)?.min ?? 0;
+
   const filtered = useMemo(() => {
     let list = vendors.filter((v) => v.kind === kind);
+    if (minRating > 0) list = list.filter((v) => v.rating >= minRating);
     if (activeFilters.includes("open-now")) list = list.filter((v) => v.open);
     if (activeFilters.includes("shortest-wait")) list = [...list].sort((a, b) => a.queue * 2 + a.avgPrep - (b.queue * 2 + b.avgPrep));
     if (activeFilters.includes("high-rewards")) list = [...list].sort((a, b) => b.rewardsRate - a.rewardsRate);
     if (activeFilters.includes("quick-prep")) list = list.filter((v) => v.avgPrep <= 12);
     return list;
-  }, [activeFilters, kind]);
+  }, [activeFilters, kind, minRating]);
 
   useEffect(() => {
     if (!sentinel.current) return;
@@ -40,7 +46,7 @@ export function VendorFeed({ kind }: { kind: "canteen" | "barber" }) {
   const toggle = (id: string) => setActiveFilters((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900">
+    <div className="min-h-screen bg-zinc-50 text-zinc-900 flex flex-col">
       <TopNav activeTab={kind === "canteen" ? "canteens" : "barbers"} />
 
       <section>
@@ -80,6 +86,15 @@ export function VendorFeed({ kind }: { kind: "canteen" | "barber" }) {
               );
             })}
           </div>
+
+          {kind === "canteen" && (
+            <div className="mt-2">
+              {carouselCategories.map((cat) => {
+                const list = vendors.filter((v) => v.kind === "canteen" && cat.pick(v));
+                return <CarouselRow key={cat.id} title={cat.title} subtitle={cat.subtitle} vendors={list} />;
+              })}
+            </div>
+          )}
         </div>
       </section>
 
@@ -101,22 +116,45 @@ export function VendorFeed({ kind }: { kind: "canteen" | "barber" }) {
               {f.label}
             </button>
           ))}
+          <div className="w-px bg-zinc-200 mx-1 shrink-0" />
+          {ratingFilters.map((r) => (
+            <button
+              key={r.id}
+              onClick={() => setRating(r.id)}
+              className={`px-4 py-2 rounded-full text-sm font-medium ring-1 whitespace-nowrap inline-flex items-center gap-1.5 transition-colors ${
+                rating === r.id
+                  ? "bg-amber-500 text-zinc-900 ring-amber-500"
+                  : "bg-white text-zinc-700 ring-zinc-200 hover:ring-amber-500"
+              }`}
+            >
+              <Star className={`size-3.5 ${rating === r.id ? "fill-zinc-900" : "fill-amber-400 stroke-amber-500"}`} />
+              {r.label}
+            </button>
+          ))}
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10 pb-20">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10 pb-20 flex-1 w-full">
         <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-6">
           {kind === "canteen" ? "All Canteens on Campus" : "All Barbers on Campus"}
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-          {filtered.slice(0, visible).map((v, i) => (
-            <VendorCard key={v.id} vendor={v} index={i} />
-          ))}
-        </div>
+        {filtered.length === 0 ? (
+          <div className="bg-white ring-1 ring-zinc-200 rounded-2xl p-10 text-center text-sm text-zinc-500">
+            No results match your filters. Try clearing some.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+            {filtered.slice(0, visible).map((v, i) => (
+              <VendorCard key={v.id} vendor={v} index={i} />
+            ))}
+          </div>
+        )}
         {visible < filtered.length && (
           <div ref={sentinel} className="h-16 grid place-items-center text-xs text-zinc-500 mt-8">Loading more…</div>
         )}
       </section>
+
+      <Footer />
     </div>
   );
 }

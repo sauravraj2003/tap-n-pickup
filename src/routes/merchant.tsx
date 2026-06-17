@@ -43,15 +43,20 @@ function Merchant() {
             <h1 className="text-3xl font-bold tracking-tight">Merchant Dashboard</h1>
             <p className="text-zinc-600 text-sm mt-1">{vendor?.name} · managing as {user.name}</p>
           </div>
-          <div className="bg-white ring-1 ring-zinc-200 rounded-2xl px-5 py-3 flex items-center gap-3">
-            <span className="text-xs uppercase tracking-widest text-zinc-500 font-semibold">Live queue</span>
-            <div className="inline-flex items-center bg-zinc-100 rounded-lg">
-              <button onClick={() => set(vendorId, Math.max(0, queueValue - 1))} className="size-9 grid place-items-center font-bold">−</button>
-              <span className="w-10 text-center font-mono font-bold">{queueValue}</span>
-              <button onClick={() => set(vendorId, queueValue + 1)} className="size-9 grid place-items-center font-bold">+</button>
+          <div className="flex items-center gap-3 flex-wrap">
+            <Link to="/merchant/analytics" className="text-xs font-semibold px-3 py-2 ring-1 ring-zinc-300 rounded-xl">Vendor Analytics</Link>
+            <Link to="/barber/analytics" className="text-xs font-semibold px-3 py-2 ring-1 ring-zinc-300 rounded-xl">Barber Analytics</Link>
+            <div className="bg-white ring-1 ring-zinc-200 rounded-2xl px-5 py-3 flex items-center gap-3">
+              <span className="text-xs uppercase tracking-widest text-zinc-500 font-semibold">Live queue</span>
+              <div className="inline-flex items-center bg-zinc-100 rounded-lg">
+                <button onClick={() => set(vendorId, Math.max(0, queueValue - 1))} className="size-9 grid place-items-center font-bold">−</button>
+                <span className="w-10 text-center font-mono font-bold">{queueValue}</span>
+                <button onClick={() => set(vendorId, queueValue + 1)} className="size-9 grid place-items-center font-bold">+</button>
+              </div>
             </div>
           </div>
         </div>
+
 
         <section className="mt-8">
           <h2 className="text-xl font-bold mb-4">Incoming orders</h2>

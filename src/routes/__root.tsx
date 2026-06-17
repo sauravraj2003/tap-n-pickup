@@ -10,6 +10,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 import { Toaster } from "sonner";
 import { ActiveTicketWidget } from "@/components/web/ActiveTicketWidget";
+import { ThemeProvider } from "@/lib/theme";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -118,9 +119,11 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
-      <ActiveTicketWidget />
-      <Toaster position="top-right" richColors />
+      <ThemeProvider>
+        <Outlet />
+        <ActiveTicketWidget />
+        <Toaster position="top-right" richColors />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

@@ -123,3 +123,20 @@
   html, body { background-color: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
   .font-mono { font-family: var(--font-mono); }
 }
+
+/* Theme overlays — applied via class on <html>. They invert/tint the whole
+   page so the existing utility-class palette stays untouched, then restore
+   media (img/video/iframe) to their natural appearance. */
+html.theme-light { filter: none; background: #fafafa; }
+html.theme-dark { filter: invert(1) hue-rotate(180deg); background: #000; color-scheme: dark; }
+html.theme-dark img,
+html.theme-dark video,
+html.theme-dark iframe,
+html.theme-dark canvas,
+html.theme-dark svg.preserve-color,
+html.theme-dark [data-no-invert] { filter: invert(1) hue-rotate(180deg); }
+html.theme-eye-comfort { filter: sepia(0.3) saturate(0.9) brightness(0.97); }
+html.theme-light, html.theme-dark, html.theme-eye-comfort { transition: filter 0.25s ease; }
+
+.sm\:grid-cols-24 { grid-template-columns: repeat(24, minmax(0, 1fr)); }
+

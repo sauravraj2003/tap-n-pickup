@@ -10,13 +10,16 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrackRouteImport } from './routes/track'
+import { Route as SupportRouteImport } from './routes/support'
 import { Route as SigninRouteImport } from './routes/signin'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as RewardsRouteImport } from './routes/rewards'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MerchantRouteImport } from './routes/merchant'
 import { Route as HomeRouteImport } from './routes/home'
+import { Route as CollectionsRouteImport } from './routes/collections'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as BarbersRouteImport } from './routes/barbers'
@@ -29,8 +32,11 @@ import { Route as ReviewsIdRouteImport } from './routes/reviews.$id'
 import { Route as OrderTrackingRouteImport } from './routes/order.tracking'
 import { Route as OrderPickupRouteImport } from './routes/order.pickup'
 import { Route as OrderConfirmationRouteImport } from './routes/order.confirmation'
+import { Route as MerchantAnalyticsRouteImport } from './routes/merchant.analytics'
 import { Route as ItemItemIdRouteImport } from './routes/item.$itemId'
+import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
 import { Route as CanteenIdRouteImport } from './routes/canteen.$id'
+import { Route as BarberAnalyticsRouteImport } from './routes/barber.analytics'
 import { Route as AuthOtpRouteImport } from './routes/auth.otp'
 
 const TrackRoute = TrackRouteImport.update({
@@ -38,9 +44,19 @@ const TrackRoute = TrackRouteImport.update({
   path: '/track',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SigninRoute = SigninRouteImport.update({
   id: '/signin',
   path: '/signin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RewardsRoute = RewardsRouteImport.update({
@@ -71,6 +87,11 @@ const MerchantRoute = MerchantRouteImport.update({
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollectionsRoute = CollectionsRouteImport.update({
+  id: '/collections',
+  path: '/collections',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutRoute = CheckoutRouteImport.update({
@@ -133,14 +154,29 @@ const OrderConfirmationRoute = OrderConfirmationRouteImport.update({
   path: '/order/confirmation',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MerchantAnalyticsRoute = MerchantAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => MerchantRoute,
+} as any)
 const ItemItemIdRoute = ItemItemIdRouteImport.update({
   id: '/item/$itemId',
   path: '/item/$itemId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CollectionsSlugRoute = CollectionsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => CollectionsRoute,
+} as any)
 const CanteenIdRoute = CanteenIdRouteImport.update({
   id: '/canteen/$id',
   path: '/canteen/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BarberAnalyticsRoute = BarberAnalyticsRouteImport.update({
+  id: '/barber/analytics',
+  path: '/barber/analytics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthOtpRoute = AuthOtpRouteImport.update({
@@ -157,17 +193,23 @@ export interface FileRoutesByFullPath {
   '/barbers': typeof BarbersRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/collections': typeof CollectionsRouteWithChildren
   '/home': typeof HomeRoute
-  '/merchant': typeof MerchantRoute
+  '/merchant': typeof MerchantRouteWithChildren
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
   '/rewards': typeof RewardsRoute
+  '/settings': typeof SettingsRoute
   '/signin': typeof SigninRoute
+  '/support': typeof SupportRoute
   '/track': typeof TrackRoute
   '/auth/otp': typeof AuthOtpRoute
+  '/barber/analytics': typeof BarberAnalyticsRoute
   '/canteen/$id': typeof CanteenIdRoute
+  '/collections/$slug': typeof CollectionsSlugRoute
   '/item/$itemId': typeof ItemItemIdRoute
+  '/merchant/analytics': typeof MerchantAnalyticsRoute
   '/order/confirmation': typeof OrderConfirmationRoute
   '/order/pickup': typeof OrderPickupRoute
   '/order/tracking': typeof OrderTrackingRoute
@@ -182,17 +224,23 @@ export interface FileRoutesByTo {
   '/barbers': typeof BarbersRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/collections': typeof CollectionsRouteWithChildren
   '/home': typeof HomeRoute
-  '/merchant': typeof MerchantRoute
+  '/merchant': typeof MerchantRouteWithChildren
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
   '/rewards': typeof RewardsRoute
+  '/settings': typeof SettingsRoute
   '/signin': typeof SigninRoute
+  '/support': typeof SupportRoute
   '/track': typeof TrackRoute
   '/auth/otp': typeof AuthOtpRoute
+  '/barber/analytics': typeof BarberAnalyticsRoute
   '/canteen/$id': typeof CanteenIdRoute
+  '/collections/$slug': typeof CollectionsSlugRoute
   '/item/$itemId': typeof ItemItemIdRoute
+  '/merchant/analytics': typeof MerchantAnalyticsRoute
   '/order/confirmation': typeof OrderConfirmationRoute
   '/order/pickup': typeof OrderPickupRoute
   '/order/tracking': typeof OrderTrackingRoute
@@ -208,17 +256,23 @@ export interface FileRoutesById {
   '/barbers': typeof BarbersRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/collections': typeof CollectionsRouteWithChildren
   '/home': typeof HomeRoute
-  '/merchant': typeof MerchantRoute
+  '/merchant': typeof MerchantRouteWithChildren
   '/notifications': typeof NotificationsRoute
   '/orders': typeof OrdersRoute
   '/profile': typeof ProfileRoute
   '/rewards': typeof RewardsRoute
+  '/settings': typeof SettingsRoute
   '/signin': typeof SigninRoute
+  '/support': typeof SupportRoute
   '/track': typeof TrackRoute
   '/auth/otp': typeof AuthOtpRoute
+  '/barber/analytics': typeof BarberAnalyticsRoute
   '/canteen/$id': typeof CanteenIdRoute
+  '/collections/$slug': typeof CollectionsSlugRoute
   '/item/$itemId': typeof ItemItemIdRoute
+  '/merchant/analytics': typeof MerchantAnalyticsRoute
   '/order/confirmation': typeof OrderConfirmationRoute
   '/order/pickup': typeof OrderPickupRoute
   '/order/tracking': typeof OrderTrackingRoute
@@ -235,17 +289,23 @@ export interface FileRouteTypes {
     | '/barbers'
     | '/cart'
     | '/checkout'
+    | '/collections'
     | '/home'
     | '/merchant'
     | '/notifications'
     | '/orders'
     | '/profile'
     | '/rewards'
+    | '/settings'
     | '/signin'
+    | '/support'
     | '/track'
     | '/auth/otp'
+    | '/barber/analytics'
     | '/canteen/$id'
+    | '/collections/$slug'
     | '/item/$itemId'
+    | '/merchant/analytics'
     | '/order/confirmation'
     | '/order/pickup'
     | '/order/tracking'
@@ -260,17 +320,23 @@ export interface FileRouteTypes {
     | '/barbers'
     | '/cart'
     | '/checkout'
+    | '/collections'
     | '/home'
     | '/merchant'
     | '/notifications'
     | '/orders'
     | '/profile'
     | '/rewards'
+    | '/settings'
     | '/signin'
+    | '/support'
     | '/track'
     | '/auth/otp'
+    | '/barber/analytics'
     | '/canteen/$id'
+    | '/collections/$slug'
     | '/item/$itemId'
+    | '/merchant/analytics'
     | '/order/confirmation'
     | '/order/pickup'
     | '/order/tracking'
@@ -285,17 +351,23 @@ export interface FileRouteTypes {
     | '/barbers'
     | '/cart'
     | '/checkout'
+    | '/collections'
     | '/home'
     | '/merchant'
     | '/notifications'
     | '/orders'
     | '/profile'
     | '/rewards'
+    | '/settings'
     | '/signin'
+    | '/support'
     | '/track'
     | '/auth/otp'
+    | '/barber/analytics'
     | '/canteen/$id'
+    | '/collections/$slug'
     | '/item/$itemId'
+    | '/merchant/analytics'
     | '/order/confirmation'
     | '/order/pickup'
     | '/order/tracking'
@@ -311,14 +383,18 @@ export interface RootRouteChildren {
   BarbersRoute: typeof BarbersRoute
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
+  CollectionsRoute: typeof CollectionsRouteWithChildren
   HomeRoute: typeof HomeRoute
-  MerchantRoute: typeof MerchantRoute
+  MerchantRoute: typeof MerchantRouteWithChildren
   NotificationsRoute: typeof NotificationsRoute
   OrdersRoute: typeof OrdersRoute
   ProfileRoute: typeof ProfileRoute
   RewardsRoute: typeof RewardsRoute
+  SettingsRoute: typeof SettingsRoute
   SigninRoute: typeof SigninRoute
+  SupportRoute: typeof SupportRoute
   TrackRoute: typeof TrackRoute
+  BarberAnalyticsRoute: typeof BarberAnalyticsRoute
   CanteenIdRoute: typeof CanteenIdRoute
   ItemItemIdRoute: typeof ItemItemIdRoute
   OrderConfirmationRoute: typeof OrderConfirmationRoute
@@ -337,11 +413,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signin': {
       id: '/signin'
       path: '/signin'
       fullPath: '/signin'
       preLoaderRoute: typeof SigninRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/rewards': {
@@ -384,6 +474,13 @@ declare module '@tanstack/react-router' {
       path: '/home'
       fullPath: '/home'
       preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collections': {
+      id: '/collections'
+      path: '/collections'
+      fullPath: '/collections'
+      preLoaderRoute: typeof CollectionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkout': {
@@ -470,6 +567,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrderConfirmationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/merchant/analytics': {
+      id: '/merchant/analytics'
+      path: '/analytics'
+      fullPath: '/merchant/analytics'
+      preLoaderRoute: typeof MerchantAnalyticsRouteImport
+      parentRoute: typeof MerchantRoute
+    }
     '/item/$itemId': {
       id: '/item/$itemId'
       path: '/item/$itemId'
@@ -477,11 +581,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ItemItemIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/collections/$slug': {
+      id: '/collections/$slug'
+      path: '/$slug'
+      fullPath: '/collections/$slug'
+      preLoaderRoute: typeof CollectionsSlugRouteImport
+      parentRoute: typeof CollectionsRoute
+    }
     '/canteen/$id': {
       id: '/canteen/$id'
       path: '/canteen/$id'
       fullPath: '/canteen/$id'
       preLoaderRoute: typeof CanteenIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/barber/analytics': {
+      id: '/barber/analytics'
+      path: '/barber/analytics'
+      fullPath: '/barber/analytics'
+      preLoaderRoute: typeof BarberAnalyticsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/otp': {
@@ -504,6 +622,30 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
+interface CollectionsRouteChildren {
+  CollectionsSlugRoute: typeof CollectionsSlugRoute
+}
+
+const CollectionsRouteChildren: CollectionsRouteChildren = {
+  CollectionsSlugRoute: CollectionsSlugRoute,
+}
+
+const CollectionsRouteWithChildren = CollectionsRoute._addFileChildren(
+  CollectionsRouteChildren,
+)
+
+interface MerchantRouteChildren {
+  MerchantAnalyticsRoute: typeof MerchantAnalyticsRoute
+}
+
+const MerchantRouteChildren: MerchantRouteChildren = {
+  MerchantAnalyticsRoute: MerchantAnalyticsRoute,
+}
+
+const MerchantRouteWithChildren = MerchantRoute._addFileChildren(
+  MerchantRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
@@ -512,14 +654,18 @@ const rootRouteChildren: RootRouteChildren = {
   BarbersRoute: BarbersRoute,
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
+  CollectionsRoute: CollectionsRouteWithChildren,
   HomeRoute: HomeRoute,
-  MerchantRoute: MerchantRoute,
+  MerchantRoute: MerchantRouteWithChildren,
   NotificationsRoute: NotificationsRoute,
   OrdersRoute: OrdersRoute,
   ProfileRoute: ProfileRoute,
   RewardsRoute: RewardsRoute,
+  SettingsRoute: SettingsRoute,
   SigninRoute: SigninRoute,
+  SupportRoute: SupportRoute,
   TrackRoute: TrackRoute,
+  BarberAnalyticsRoute: BarberAnalyticsRoute,
   CanteenIdRoute: CanteenIdRoute,
   ItemItemIdRoute: ItemItemIdRoute,
   OrderConfirmationRoute: OrderConfirmationRoute,

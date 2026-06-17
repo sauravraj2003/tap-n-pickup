@@ -3,8 +3,11 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Star, Users, Clock, Coins, X, Plus } from "lucide-react";
 import { TopNav } from "@/components/web/TopNav";
+import { MiniMap } from "@/components/web/MiniMap";
+import { AdSlot } from "@/components/web/AdSlot";
 import { getVendor, menuByVendor } from "@/lib/campus-data";
 import { useCart, useVendorQueue } from "@/lib/store";
+
 
 export const Route = createFileRoute("/vendor/$id")({
   loader: ({ params }) => {
@@ -69,33 +72,41 @@ function VendorDetail() {
         </div>
       </div>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10">
-        <h2 className="text-2xl font-bold tracking-tight mb-6">Menu</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {menu.map((item: typeof menu[number]) => (
-            <div key={item.id} className="bg-white ring-1 ring-zinc-200 rounded-2xl p-4 flex gap-4">
-              <img src={item.image} alt={item.name} className="size-24 rounded-xl object-cover ring-1 ring-zinc-200" />
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="font-semibold">{item.name}</h3>
-                  <span className="font-mono font-bold">₹{item.price}</span>
-                </div>
-                <p className="text-sm text-zinc-500 mt-1 line-clamp-2">{item.desc}</p>
-                <div className="flex items-center justify-between mt-3">
-                  <span className="text-[11px] text-zinc-500 font-mono uppercase tracking-widest">{item.prep}m prep</span>
-                  <button onClick={() => openModal(item)} className="text-xs font-semibold bg-zinc-900 text-zinc-50 px-3 py-1.5 rounded-lg inline-flex items-center gap-1.5">
-                    <Plus className="size-3" /> Add
-                  </button>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10 grid lg:grid-cols-[1fr_360px] gap-8">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight mb-6">Menu</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {menu.map((item: typeof menu[number]) => (
+              <div key={item.id} className="bg-white ring-1 ring-zinc-200 rounded-2xl p-4 flex gap-4">
+                <img src={item.image} alt={item.name} className="size-24 rounded-xl object-cover ring-1 ring-zinc-200" />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="font-semibold">{item.name}</h3>
+                    <span className="font-mono font-bold">₹{item.price}</span>
+                  </div>
+                  <p className="text-sm text-zinc-500 mt-1 line-clamp-2">{item.desc}</p>
+                  <div className="flex items-center justify-between mt-3">
+                    <span className="text-[11px] text-zinc-500 font-mono uppercase tracking-widest">{item.prep}m prep</span>
+                    <button onClick={() => openModal(item)} className="text-xs font-semibold bg-zinc-900 text-zinc-50 px-3 py-1.5 rounded-lg inline-flex items-center gap-1.5">
+                      <Plus className="size-3" /> Add
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          <Link to="/checkout" className="mt-10 inline-block bg-zinc-900 text-zinc-50 px-6 py-3 rounded-xl text-sm font-semibold">
+            Go to cart
+          </Link>
         </div>
 
-        <Link to="/checkout" className="mt-10 inline-block bg-zinc-900 text-zinc-50 px-6 py-3 rounded-xl text-sm font-semibold">
-          Go to cart
-        </Link>
+        <aside className="space-y-5 lg:sticky lg:top-32 self-start">
+          <MiniMap lat={vendor.lat} lng={vendor.lng} name={vendor.name} />
+          <AdSlot id={`vendor-${vendor.id}`} format="card" />
+        </aside>
       </section>
+
 
       {selected && (
         <div className="fixed inset-0 z-50 grid place-items-center bg-zinc-900/50 backdrop-blur-sm p-4" onClick={() => setSelected(null)}>

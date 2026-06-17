@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Search, MapPin, ChevronDown, Bell, User, ShoppingBag, Utensils, Scissors, LogOut } from "lucide-react";
+import { Search, MapPin, ChevronDown, User, ShoppingBag, Utensils, Scissors, LogOut, LayoutGrid, Settings, LifeBuoy } from "lucide-react";
 import { useAuth, useCart } from "@/lib/store";
+import { NotificationBell } from "@/components/web/NotificationBell";
 
 export function TopNav({ activeTab = "canteens" }: { activeTab?: "canteens" | "barbers" }) {
   const { user, signOut } = useAuth();
@@ -28,6 +29,9 @@ export function TopNav({ activeTab = "canteens" }: { activeTab?: "canteens" | "b
         </div>
 
         <div className="hidden lg:flex items-center gap-5 shrink-0 text-sm">
+          <Link to="/collections" className="text-zinc-700 hover:text-zinc-900 inline-flex items-center gap-1.5">
+            <LayoutGrid className="size-4" /> Collections
+          </Link>
           {user?.role === "admin" && (
             <Link to="/admin" className="font-semibold text-zinc-900 hover:underline">Admin</Link>
           )}
@@ -40,13 +44,15 @@ export function TopNav({ activeTab = "canteens" }: { activeTab?: "canteens" | "b
           {user?.role === "user" && (
             <Link to="/apply" className="text-zinc-700 hover:text-zinc-900">Apply as Merchant</Link>
           )}
-          <Link to="/checkout" className="relative text-zinc-700 hover:text-zinc-900">
+          <Link to="/checkout" className="relative text-zinc-700 hover:text-zinc-900" aria-label="Cart">
             <ShoppingBag className="size-5" />
             {cartCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-zinc-900 text-zinc-50 text-[10px] font-bold rounded-full size-4 grid place-items-center">{cartCount}</span>
             )}
           </Link>
-          <Link to="/notifications" className="text-zinc-700 hover:text-zinc-900"><Bell className="size-5" /></Link>
+          <NotificationBell />
+          <Link to="/support" className="text-zinc-700 hover:text-zinc-900" aria-label="Support"><LifeBuoy className="size-5" /></Link>
+          <Link to="/settings" className="text-zinc-700 hover:text-zinc-900" aria-label="Settings"><Settings className="size-5" /></Link>
           {user ? (
             <div className="flex items-center gap-3">
               <Link to="/profile" className="flex items-center gap-2 text-zinc-700 hover:text-zinc-900">
